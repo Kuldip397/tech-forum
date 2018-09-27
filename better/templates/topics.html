@@ -13,21 +13,27 @@
 	<div class="mb-4">
     	<a href="{% url 'new_topic' board.pk %}" class="btn btn-primary">New topic</a>
   	</div>
-    <table class="table">
+    <table class="table">	
     	<thead class="thead-inverse">
     		<tr>
     			<th>Topic</th>
     			<th>Starter</th>
+    			<th>Replies</th>
     			<th>Views</th>
     			<th>Last Update</th>
     		</tr>
     	</thead>
     	<tbody>
-    		{% for topic in board.topics.all %}
+    		{% for topic in topics%}
     		<tr>
-    			<td> {{ topic.subject }}</td>
+    			<td><a href="{% url 'topic_posts' board.pk topic.pk %}"> {{ topic.subject }}</a></td>
     			<td> {{ topic.starter.username}}</td>
-    			<td>0</td>
+    			{% if topic.replies != -1 %}
+    				<td>{{topic.replies}}</td>
+    			{%else%}
+    				<td>0</td>
+    			{%endif%}
+    			<td>{{topic.views}}</td>
     			<td>{{ topic.last_updated }}</td>
     		</tr>
     		{% endfor %}
